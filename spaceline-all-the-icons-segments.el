@@ -622,13 +622,16 @@ It is only enabled when you're not in a project or if the projectile segment is 
 (spaceline-define-segment all-the-icons-position
   "The current line and total buffer line numbers, or `(current page/number of pages)`
 -in pdf-view mode (enabled by the `pdf-tools' package)."
-  (if (eq major-mode 'pdf-view-mode)
-      (spaceline--pdfview-page-number)
-    (if (and
-         (boundp 'column-number-indicator-zero-based)
-         (not column-number-indicator-zero-based))
-        (concat "%l:" (int-to-string (count-lines (point-min) (point-max))))
-      (concat "%l:" (int-to-string (count-lines (point-min) (point-max)))))))
+  (propertize (format-mode-line (if (eq major-mode 'pdf-view-mode)
+                  (spaceline--pdfview-page-number)
+                (if (and
+                     (boundp 'column-number-indicator-zero-based)
+                     (not column-number-indicator-zero-based))
+                    (concat "%l:" (int-to-string (count-lines (point-min) (point-max))))
+                  (concat "%l:" (int-to-string (count-lines (point-min) (point-max)))))))
+              'face `(:height ,(spaceline-all-the-icons--height 0.8) :inherit)
+              'display '(raise 0.2))
+  :thight t)
 
 (spaceline-define-segment all-the-icons-region-info
   "An `all-the-icons' indicator of the currently highlighted region"
