@@ -618,12 +618,17 @@ It is only enabled when you're not in a project or if the projectile segment is 
      'display '(raise 0.2)))
   :tight t)
 
+;; This function is edited by codemascot to show total line number of a buffer beside current line number
 (spaceline-define-segment all-the-icons-position
-  "An `all-the-icons' Line & Column indicator"
-  (propertize (format-mode-line "%l:%c")
-              'face `(:height ,(spaceline-all-the-icons--height 0.9) :inherit)
-              'display '(raise 0.1))
-  :tight t)
+  "The current line and total buffer line numbers, or `(current page/number of pages)`
+-in pdf-view mode (enabled by the `pdf-tools' package)."
+  (if (eq major-mode 'pdf-view-mode)
+      (spaceline--pdfview-page-number)
+    (if (and
+         (boundp 'column-number-indicator-zero-based)
+         (not column-number-indicator-zero-based))
+        (concat "%l:" (int-to-string (count-lines (point-min) (point-max))))
+      (concat "%l:" (int-to-string (count-lines (point-min) (point-max)))))))
 
 (spaceline-define-segment all-the-icons-region-info
   "An `all-the-icons' indicator of the currently highlighted region"
