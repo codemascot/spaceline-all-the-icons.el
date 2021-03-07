@@ -724,10 +724,10 @@ It is only enabled when you're not in a project or if the projectile segment is 
          (local-map (get-text-property 1 'local-map branch)))
     (propertize
      (concat
-      (propertize git-branch
-                  'face `(:family ,(all-the-icons-octicon-family) :height ,(spaceline-all-the-icons--height) :inherit)
-                  'display '(raise 0.1))
-      (propertize (format " %s" branch)
+      ;; (propertize git-branch
+      ;;             'face `(:family ,(all-the-icons-octicon-family) :height ,(spaceline-all-the-icons--height) :inherit)
+      ;;             'display '(raise 0.1))
+      (propertize (format "%s" branch)
                   'face `(:height ,(spaceline-all-the-icons--height 0.9) :inherit)
                   'display '(raise 0.1)))
      'mouse-face (spaceline-all-the-icons--highlight)
